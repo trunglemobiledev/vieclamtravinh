@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use Exception;
 
-
+// Code lại phần này
 class AuthController extends Controller
 {
     // register tạm thời
@@ -27,7 +28,7 @@ class AuthController extends Controller
             'name' => $request->name
         ];
         User::create($user);
-        return dd("Sucess", $user);
+        return $this->jsonData($user);
     }
 
     // login tạm thời lấy token
