@@ -1,0 +1,30 @@
+miduner_serve:
+    # dấu chấm current folder
+    build: .
+    # link tới dockerfile
+    dockerfile: ./docker/Dockerfile
+    # container_name
+    container_name: miduner_framework
+    # thu muc code
+    working_dir: var/www/html
+    port:
+        - "80:80"
+    volumes:
+        - .:/var/www/html
+        - ./docker/nginx_log/var/log/nginx
+        - ./docker/php-fpm/php-fpm.log:/var/log/php-fpm.log
+        - ./docker/config/app.conf:/etc/nginx/conf.d/app.conf
+    link:
+        - mysql
+
+mysql:
+    image: mysql:5.6
+    container_name: miduner_mysql
+    # port phia truoc la port su dung remote port phia sau su dung trong container khi link
+    port:
+        - "3306:3306"
+    volumes:
+        - ./docker/mysql:/var/lib/mysql
+        # password root set "password"
+    enviroments:
+        MYSQL_ROOT_PASSWORD: password
